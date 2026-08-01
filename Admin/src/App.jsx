@@ -47,13 +47,13 @@
 
 
 import React, { useEffect, useState } from 'react';
-import Login from './components/Login';
-import Sidebar from './components/Sidebar';
+import Login from './Components/Login';
+import Sidebar from './Components/Sidebar';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import AddMenu from './pages/AddMenu';
-import AdminTable from './pages/AdminTable';
-import ListMenu from './pages/Listmenu';
+import AddMenu from './Pages/AddMenu';
+import AdminTable from './Pages/AdminTable';
+import ListMenu from './Pages/ListMenu';
 
 export const backendURL = 'https://restaurant-reserve-backend-flhe.onrender.com';
 
