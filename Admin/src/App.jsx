@@ -55,7 +55,7 @@ import AddMenu from './pages/AddMenu';
 import AdminTable from './pages/AdminTable';
 import ListMenu from './pages/Listmenu';
 
-export const backendURL = 'http://localhost:4000';
+export const backendURL = 'https://restaurant-reserve-backend-flhe.onrender.com';
 
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem('token') || '');

@@ -6,7 +6,7 @@ import Footer from "./Components/Footer"
 import ChatWidget from "./Components/ChatWidget"
 import {ToastContainer} from 'react-toastify'
 
-export const backendURL = 'http://localhost:4000';
+export const backendURL = 'https://restaurant-reserve-backend-flhe.onrender.com';
 
 
 const App = () => {
