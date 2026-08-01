@@ -1,5 +1,8 @@
 import productModel from "../models/productModels.js";
 import {v2 as cloudinary} from 'cloudinary'
+import NodeCache from 'node-cache';
+
+const cache = new NodeCache({ stdTTL: 3600 }); // Cache for 1 hour
 
 const addProduct = async (req, res) => {
     try {
@@ -50,6 +53,8 @@ const addProduct = async (req, res) => {
         const product = new productModel(productData);
         await product.save();
 
+        cache.del("allProducts"); // Invalidate cache
+
         res.json({ success: true, message: "Product Added successfully" });
     } catch (error) {
         console.log(error);
@@ -58,7 +63,13 @@ const addProduct = async (req, res) => {
 }; 
 const listProducts=async(req, res)=>{
     try {
+        const cachedProducts = cache.get("allProducts");
+        if (cachedProducts) {
+            return res.json({success:true, message:cachedProducts});
+        }
+
         const products=await productModel.find({})
+        cache.set("allProducts", products);
         res.json({success:true, message:products})
 
     } catch (error) {
@@ -69,6 +80,7 @@ const listProducts=async(req, res)=>{
 const removeProduct=async(req, res)=>{
     try {
         await productModel.findByIdAndDelete(req.body._id)
+        cache.del("allProducts"); // Invalidate cache
         res.json({success:true, message:"Product Removed"});
     } catch (error) {
         console.log(error);

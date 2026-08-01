@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import compression from 'compression'
 import 'dotenv/config'
 import { connect } from 'mongoose'
 import connectDB from './config/mongodb.js'
@@ -16,6 +17,7 @@ const port = process.env.PORT || 4000
 connectDB()
 connectCloudinary()
 
+app.use(compression())
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));

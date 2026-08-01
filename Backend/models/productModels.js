@@ -20,4 +20,8 @@ const productSchema = new mongoose.Schema({
 
 const productModel = mongoose.models.product || mongoose.model('product', productSchema);
 
+// Indexes for optimization
+productSchema.index({ category: 1 });
+productSchema.index({ name: 'text' });
+
 export default productModel;

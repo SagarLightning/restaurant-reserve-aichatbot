@@ -46,14 +46,15 @@
 // export default App
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense, lazy } from 'react';
 import Login from './Components/Login';
 import Sidebar from './Components/Sidebar';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import AddMenu from './Pages/AddMenu';
-import AdminTable from './Pages/AdminTable';
-import ListMenu from './Pages/ListMenu';
+
+const AddMenu = lazy(() => import('./Pages/AddMenu'));
+const AdminTable = lazy(() => import('./Pages/AdminTable'));
+const ListMenu = lazy(() => import('./Pages/ListMenu'));
 
 export const backendURL = 'https://restaurant-reserve-backend-flhe.onrender.com';
 
@@ -77,13 +78,15 @@ const App = () => {
         <div className="flex">
           <Sidebar setToken={setToken} />
           <div className="flex-1 ml-64 p-6">
-            <Routes>
-              <Route path='/' element={<Navigate to="/add" replace />} />
-              <Route path='/add' element={<AddMenu token={token} />} />
-              <Route path='/list' element={<ListMenu token={token} />} />
-              <Route path='/table' element={<AdminTable token={token} />} />
-              <Route path='*' element={<Navigate to="/add" replace />} />
-            </Routes>
+            <Suspense fallback={<div className="flex justify-center items-center h-full">Loading Admin Page...</div>}>
+              <Routes>
+                <Route path='/' element={<Navigate to="/add" replace />} />
+                <Route path='/add' element={<AddMenu token={token} />} />
+                <Route path='/list' element={<ListMenu token={token} />} />
+                <Route path='/table' element={<AdminTable token={token} />} />
+                <Route path='*' element={<Navigate to="/add" replace />} />
+              </Routes>
+            </Suspense>
           </div>
         </div>
       )}
